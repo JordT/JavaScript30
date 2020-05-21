@@ -59,6 +59,27 @@
 
 <script>
 
+
+// tidy up//
+function playSound(e){
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  if(!audio) return; // If there is no audio assigned to data-key, this stops the function
+  audio.currentTime = 0; // resets audio everytime the function runs
+  audio.play();       // plays the audio file
+  key.classList.add('playing'); // adds css class "playing" to the key div
+}
+
+
+function removeTransition(e){
+  if (e.propertyName !== 'transform') return; //skips non transoform. 
+  this.classList.remove('playing');
+}
+
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+window.addEventListener('keydown', playSound);
+
 </script>
 
 
